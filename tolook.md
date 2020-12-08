@@ -1,0 +1,1 @@
+Set, Map, Proxy, FormData etc. once or twice to at least expose yourself to them. Learn some new stuff you haven't worked with, maybe the Canvas API, MutationObserver, IndexedDB API, webheaders
