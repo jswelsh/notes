@@ -1,6 +1,6 @@
 ## **React Cheat sheet**
 ***
->language, frontend, fast, JSX
+>framework/library, frontend, fast, JSX, component based
 
 React is a fast, Declarative Javascript library that allows simple interactive user interfaces to be designed with relative ease and reason. 
 
@@ -79,3 +79,107 @@ import {jsx as _jsx} from 'react/jsx-runtime';
 [Profiling React component performance with chrome devtools](https://calibreapp.com/blog/react-performance-profiling-optimization)
 
 [React Profiling walkthrough video](https://www.youtube.com/watch?v=nySib7ipZdk)
+
+**React Pure Components**
+resources
+[pure component](https://www.youtube.com/watch?v=X94LfGK7I9Y&feature=emb_logo)
+Do not depend or modify state of variables outside their scope. 
+
+they have huge performance impact, for example:
+
+Application calls for the same function multiple times with the same parameters — assume “add(10, 20)”. After executing it multiple times, the Chrome V8 Engine tries to optimize the code further by storing the execution result of the following function call. On the next call to the same function, with the same parameter, instead of executing the function again, the cached result is returned. Hence enhancing the Application Performance.
+
+Pure components have some performance improvements and render optimizations since React implements the shouldComponentUpdate() method implicitly for them with a shallow comparison for props and state.
+
+>However, functional components cannot leverage the performance improvements and render optimizations that come with React.PureComponent since they are not classes by definition.
+In fact, if you have a functional component and you want React to treat it as a pure component, you will have to convert the functional component to a class component that extends React.PureComponent.
+
+```
+// FUNCTIONAL COMPONENT
+function PercentageStat({ label, score = 0, total = Math.max(1, score) }) {
+  return (
+    <div>
+      <h6>{ label }</h6>
+      <span>{ Math.round(score / total * 100) }%</span>
+    </div>
+  )
+}
+
+
+// CONVERTED TO PURE COMPONENT
+class PercentageStat extends React.PureComponent {
+
+  render() {
+    const { label, score = 0, total = Math.max(1, score) } = this.props;
+
+    return (
+      <div>
+        <h6>{ label }</h6>
+        <span>{ Math.round(score / total * 100) }%</span>
+      </div>
+    )
+  }
+```
+
+Problem...
+I don't reallyl like working with class base components... just a preference
+Solution...(SEE BELOW FOR ANOTHER SOLUTION USING REACT 16.6)
+Using the { pure } HOC from [**Recompose**](https://github.com/acdlite/recompose) (HOC - Higher Order Component) which is useful when working with functional components.
+
+
+the { pure } HOC tries to prevent re-renders unless there is a change in props using a `shallowEqual()` to test for changes
+
+example of using { pure }
+```
+import React from 'react';
+import { pure } from 'recompose';
+
+function PercentageStat({ label, score = 0, total = Math.max(1, score) }) {
+  return (
+    <div>
+      <h6>{ label }</h6>
+      <span>{ Math.round(score / total * 100) }%</span>
+    </div>
+  )
+}
+
+// Wrap component using the `pure` HOC from recompose
+export default pure(PercentageStat);
+```
+
+**BUT**
+React 16.6 introduced **`React.memo()`**
+
+`React.memo()` basically memoizes functional components
+>memoizes - To store (the result of a computed expression) so that it can be subsequently retrieved without repeating the computation.
+
+**Implementation details**
+
+1. `React.memo()` is a higher-order component. It takes a React component as its first argument and returns a special kind of React component.
+2. `React.memo()` returns a special React component type. That allows the renderer to render the component while memoizing the output — thus, bailing out of updates if the component’s props are shallowly equal.
+3. `React.memo()` works with all React components. The first argument passed to React.memo() can be any type of React component. However, for class components, you should use React.PureComponent instead of using React.memo().
+4. `React.memo()` also works with components rendered from the server using ReactDOMServer.
+
+**Using `React.memo()`**
+
+```
+import React, { memo } from 'react';
+
+function PercentageStat({ label, score = 0, total = Math.max(1, score) }) {
+  return (
+    <div>
+      <h6>{ label }</h6>
+      <span>{ Math.round(score / total * 100) }%</span>
+    </div>
+  )
+}
+
+// Wrap component using `React.memo()`
+export default memo(PercentageStat);
+```
+>**Custom bailout condition**
+The React.memo() API can take a second argument, which is the arePropsEqual() function.
+The default behavior of React.memo() is to shallowly compare the component props. However, with the arePropsEqual() function, you can customize the bailout condition for component updates.
+The arePropsEqual() function is defined with two parameters: prevProps and nextProps.
+The arePropsEqual() function returns true when the props are compared to be equal (thereby preventing the component from re-rendering) and returns false when the props are not equal.
+The arePropsEqual() function acts much like the shouldComponentUpdate() lifecycle method in class components, but in the reverse manner.

@@ -1,6 +1,5 @@
 ##**Websockets**
 ***
->socket.io
 
 Resources
 - [a youtube video on websockets](https://www.youtube.com/watch?v=vQjiN8Qgs3c)
