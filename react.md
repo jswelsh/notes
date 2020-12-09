@@ -186,3 +186,14 @@ The arePropsEqual() function acts much like the shouldComponentUpdate() lifecycl
 
 **Conditional Rendering**
 [reference](https://www.digitalocean.com/community/tutorials/7-ways-to-implement-conditional-rendering-in-react-applications)
+
+
+**Security**
+
+Out of the box react provides security against XSS (Cross Site Scripting) which is a vulnerability that allows un-trusted sources to place malicious data or scripts into a web application. Browsers interpret these scripts as legitimate and run them, allowing data and control to be given to the illegitimate source. By default React will escape all data embedded in JSX. This just removes or replaces any characters that could be interpreted as code. Caveats in tow, you can find yourself outside Reacts auto-escaping, to solve this is use `dangerouslySetInnerHtml`.
+
+URLs should never be from an external source. Do not let users input their own URLS.
+
+You should always keep your framework updated to keep security patches inline.
+
+Never trust data from an external source. USer, API or address bar in browser. Handle data as malicious and take security measures based on where the data is.
