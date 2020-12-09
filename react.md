@@ -122,7 +122,7 @@ class PercentageStat extends React.PureComponent {
 ```
 
 Problem...
-I don't reallyl like working with class base components... just a preference
+I don't really like working with class base components... just a preference
 Solution...(SEE BELOW FOR ANOTHER SOLUTION USING REACT 16.6)
 Using the { pure } HOC from [**Recompose**](https://github.com/acdlite/recompose) (HOC - Higher Order Component) which is useful when working with functional components.
 
