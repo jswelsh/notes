@@ -183,3 +183,6 @@ The default behavior of React.memo() is to shallowly compare the component props
 The arePropsEqual() function is defined with two parameters: prevProps and nextProps.
 The arePropsEqual() function returns true when the props are compared to be equal (thereby preventing the component from re-rendering) and returns false when the props are not equal.
 The arePropsEqual() function acts much like the shouldComponentUpdate() lifecycle method in class components, but in the reverse manner.
+
+**Conditional Rendering**
+[reference](https://www.digitalocean.com/community/tutorials/7-ways-to-implement-conditional-rendering-in-react-applications)
