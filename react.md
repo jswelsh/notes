@@ -185,10 +185,11 @@ The arePropsEqual() function returns true when the props are compared to be equa
 The arePropsEqual() function acts much like the shouldComponentUpdate() lifecycle method in class components, but in the reverse manner.
 
 **Conditional Rendering**
-[reference](https://www.digitalocean.com/community/tutorials/7-ways-to-implement-conditional-rendering-in-react-applications)
+[source](https://www.digitalocean.com/community/tutorials/7-ways-to-implement-conditional-rendering-in-react-applications)
 
 
 **Security**
+[source](https://react.christmas/2020/3)
 
 Out of the box react provides security against XSS (Cross Site Scripting) which is a vulnerability that allows un-trusted sources to place malicious data or scripts into a web application. Browsers interpret these scripts as legitimate and run them, allowing data and control to be given to the illegitimate source. By default React will escape all data embedded in JSX. This just removes or replaces any characters that could be interpreted as code. Caveats in tow, you can find yourself outside Reacts auto-escaping, to solve this is use `dangerouslySetInnerHtml`.
 
@@ -197,3 +198,46 @@ URLs should never be from an external source. Do not let users input their own U
 You should always keep your framework updated to keep security patches inline.
 
 Never trust data from an external source. USer, API or address bar in browser. Handle data as malicious and take security measures based on where the data is.
+
+**Intelligent fetching and caching with SWR**
+[source](https://react.christmas/2020/4)
+
+>SWR has quickly become one of my favorite tools in my toolbox. The name SWR refers to the caching strategy stale-while-revalidate, and in its essence, the library provides just this, a caching strategy. The library is made by Vercel, the creators of Next.js, and has excellent documentation.
+
+You provide the data fetching, SWR handles the caching, and stores it for you.
+
+**Getting the Data**
+Fetching data through the SWR is simple. The `useSWR` hook is a key tool.
+`const { data, error } = useSWR(URL, fetcher);`
+first argument is the fetcher function use to fetch data. The data object is either `undefined` (this is what happpens when initially loading) or data from the cache. `error` is `undefined` unless the fetcher function has thrown an exception or rejected the promise.
+typical fetcher function: `const fetcher = (url) => fetch(url).then((res) => res.json());`
+
+The data is `undefined` the first time `useSWR` hook is used until it is loaded. When the same key is used again, the stale data is immediately returned. The SWR revalidates the data and once it is finished the cache is refreshed and the new data is served. 
+
+`const { data, error, isValidating } = useSWR(URL, fetcher);` useSWR hook exposes the revalidation status through the hook, which can be used to show some loading state.
+
+**Mutation**
+If you want to change some of the data, you can do so using the `mutate(key, data?, shouldRevalidate?)`
+
+the `key` is the cache key, `data` is the changed data object, and `shouldRevalidate` is whether or not to trigger revalidation of the data against the resource after mutation the data.
+
+For an even tidier usage, you can pull out the Swiss army knife again, as the mutate function with a pre-set key is given through the useSWR hook; all you've got to do is ask!
+
+`const { data, error, isValidating, mutate } = useSWR(URL, fetcher);`
+
+Combining these to achieve the initial goal of a fast change while updating a resource, your function would look like this:
+
+```
+const changeUsername = (username) => {
+  // Mutate local data
+  mutate('/api/user', { ...data, username}, false)
+  // Update resource
+  await updateUserName(username)
+  // Optional: Trigger revalidation to ensure we have correct data
+  mutate()
+}
+```
+the first revalidation in the first mutation. This is because revalidation would load the
+
+
+**still need to finish notes for this**
