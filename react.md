@@ -239,5 +239,4 @@ const changeUsername = (username) => {
 ```
 the first revalidation in the first mutation. This is because revalidation would load the
 
-
 **still need to finish notes for this**
