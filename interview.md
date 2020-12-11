@@ -34,3 +34,20 @@ Prepare equipment but relax, don't study
 
 The day
 Good breakfast, dress comfortably dial in 2 minutes early
+***
+
+**Complete the interview**
+
+1. Listen and note
+
+2. Clarifying questions
+
+3. Restate the problem in your own words
+
+4. Think
+
+5. Propose a solution
+
+6. Implement your solution
+
+7. Test your implementation 
