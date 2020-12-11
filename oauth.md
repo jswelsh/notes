@@ -1,10 +1,17 @@
 ##**OAuth**
 ___
 
->Google, Authentication, Certificate
+>Google, Authorization protocol, Certificate
 
-References
+Sources
 - [Google OAuth article](https://www.nylas.com/blog/integrate-google-oauth?gclid=CjwKCAiAiML-BRAAEiwAuWVggqBIYd8syPIAPRWWLMk_LCiGf3L5QjTkerDR-5qUUVHNbZIZ_P0_GBoCTnIQAvD_BwE)
+- [javabrains OAuth](https://www.youtube.com/watch?v=t4-416mg6iU)
+
+![OAuth code flow](https://i2.wp.com/blogs.innovationm.com/wp-content/uploads/2019/07/blog-open1.png?resize=768%2C427)
+
+OAuth is about authorization and not authentication. Authorization is asking for permission to do stuff. Authentication is about proving you are the correct person because you know things. OAuth doesn’t pass authentication data between consumers and service providers – but instead acts as an authorization token of sorts.
+
+The common analogy is the valet key to your car. The valet key allows the valet to start and move the car but doesn’t give them access to the trunk or the glove box.
 
 >app developers are increasingly turning to OAuth to authenticate user accounts because it provides much better security through secure delegated access that uses access tokens rather than username and password credentials. 
 
