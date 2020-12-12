@@ -256,3 +256,25 @@ Bundling is an effective solution to many problems, but as apps scale especially
 
 (source)[https://www.freecodecamp.org/news/how-to-optimize-react-applications-with-lazy-loading-232183e02768/]
 is an old technique to optimize applications. The technique sets aside non-critical assets to be rendered following all the critical ones
+
+
+###**State**
+
+**Recoil**
+[source](https://www.telerik.com/blogs/recoil-in-react)
+[source](https://recoiljs.org/)
+State management library
+- Minimal and Reactish
+- Data-flow Graph
+- Shared state
+  - the same state in different components in the React tree in a way that's really performant and consistent
+- Derived data and queries 
+  - Compute things based on ing state efficiently in a very robust way. Derived data are things that are computed or related to the state in some way.
+- App-Wide state observation 
+  - Observe changes, time-travel debugging, persistence, logging-observe everything happening in the app from some component
+
+  **Atoms**
+  An Atom is a changeable, subsribeable unit of the state. Changing the state will re-render every components that are subscribed to that atom.
+
+  **Selectors**
+  a Selector is a pure function that can receive an atom or a selector as an input. given an input, the selector returns a modified state every time the upstream atoms or selectors are updated.
