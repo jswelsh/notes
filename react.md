@@ -240,3 +240,19 @@ const changeUsername = (username) => {
 the first revalidation in the first mutation. This is because revalidation would load the
 
 **still need to finish notes for this**
+
+
+
+###**Code-Splitting**
+[source](https://reactjs.org/docs/code-splitting.html)
+**Bundling**
+Most React apps will have their files “bundled” using tools like [Webpack](https://webpack.js.org/), [Rollup](https://rollupjs.org/guide/en/) or [Browserify](http://browserify.org/).  Bundling is when imported files are merged into a single file or a couple of files: a "bundle". This bundle is then used to load and entire app at once
+
+**Code Splitting**
+
+Bundling is an effective solution to many problems, but as apps scale especially when including third party libraries the app code base can become very large. The solution to this problem is splitting your code. **code-splitting** is a feature supported by bundlers like Webpack, Rollup and Browserify (via factor-bundle) which can create multiple bundles that can be dynamically loaded at runtime.
+
+**Lazy Loading**
+
+(source)[https://www.freecodecamp.org/news/how-to-optimize-react-applications-with-lazy-loading-232183e02768/]
+is an old technique to optimize applications. The technique sets aside non-critical assets to be rendered following all the critical ones

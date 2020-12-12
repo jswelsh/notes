@@ -1,7 +1,7 @@
 ##**OAuth**
 ___
 
->Google, Authorization protocol, Certificate
+>Google, Authorization protocol, Certificate, token
 
 Sources
 - [Google OAuth article](https://www.nylas.com/blog/integrate-google-oauth?gclid=CjwKCAiAiML-BRAAEiwAuWVggqBIYd8syPIAPRWWLMk_LCiGf3L5QjTkerDR-5qUUVHNbZIZ_P0_GBoCTnIQAvD_BwE)
