@@ -486,3 +486,73 @@ function Timer() {
   );
 }
 ```
+
+
+**Javascript Computed Property Names**
+[source](http://eloquentcode.com/computed-property-names-in-javascript#:~:text=Computed%20Property%20Names%20is%20an,be%20determined%20dynamically%2C%20i.e.%20computed.)
+
+This is an ES6 feature, it allows names of objects properties to be dynamically computed through object literal notation
+
+in the past we would have to do this 
+```
+var STATUS_SUCCESS = "STATUS_SUCCESS";
+var STATUS_FAILURE = "STATUS_FAILURE";
+
+var messages = {};
+
+messages[STATUS_SUCCESS] = "Updated";
+messages[STATUS_FAILURE] = "Error";
+```
+example
+```
+const myPropertyName = 'c'
+
+const myObject = {
+  a: 5,
+  b: 10,
+  [myPropertyName]: 15
+} 
+
+console.log(myObject.c) // prints 15
+```
+```
+const fieldNumber = 3
+
+const myObject = {
+  field1: 5,
+  field2: 10,
+  ['field' + fieldNumber]: 15
+}
+
+console.log(myObject.field3) // prints 15
+```
+
+```
+const fieldNumber = 3
+
+const myObject = {
+  field1: 5,
+  field2: 10,
+  [`field${fieldNumber}`]: 15
+}
+
+console.log(myObject.field3) // prints 15
+```
+before
+```
+function objectify (key, value) {
+  let obj = {}
+  obj[key] = value
+  return obj
+}
+
+objectify('name', 'Tyler') // { name: 'Tyler' }
+```
+now
+```
+function objectify (key, value) {
+  return {
+    [key]: value
+  }
+}
+```
