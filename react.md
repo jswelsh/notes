@@ -596,3 +596,13 @@ Every time your app's state updates, React builds a new VDOM and diffs with the 
 **VDOM is a programming concept**
 
 [the shadow DOM](https://www.youtube.com/watch?v=K5i9zMzVlzM&feature=youtu.be)
+
+**Prop Drilling**
+[source](https://scrimba.com/articles/react-interview-questions/)
+[source](https://kentcdodds.com/blog/prop-drilling)
+
+Prop Drilling is when you pass props down through a component that doesn't use the prop but passes it down to a deeper component.
+
+also known as **threading**.
+
+solution to prop drilling is compound components or react context
