@@ -575,3 +575,24 @@ function objectify (key, value) {
 ###**React DOM**
 
 [source](https://scrimba.com/articles/react-interview-questions/)
+
+[source](https://reactjs.org/docs/faq-internals.html)
+
+the DOM represents theh HTML doucment as a tree structure, with each note representing an element, element attribute or text
+![DOM](https://scrimba.com/articles/content/images/size/w1000/2020/11/image-2.png)
+
+any node on the tree can be accessed using JavaScript and the DOM API. When you do this, the browser traverses the DOM and re renders each node, even if that node hasn't changed since the previous render. This is inefficient.
+
+>Imagine a scenario where you need to update only one tr of 10,000 in a table. Rendering all 10,000 rows will almost certainly lead to a drop in frames, potentially causing the table to flicker and interrupt the user's experience.
+
+React's DOM is a virtual representation of the DOM
+
+Every time your app's state updates, React builds a new VDOM and diffs with the previous VDOM to determine what changes are necessary before updating the DOM directly and efficiently:
+
+![](https://scrimba.com/articles/content/images/size/w1000/2020/11/2.png)
+
+**reconciliation** (React reconciles the newly-built VDOM with the previous one)
+
+**VDOM is a programming concept**
+
+[the shadow DOM](https://www.youtube.com/watch?v=K5i9zMzVlzM&feature=youtu.be)
