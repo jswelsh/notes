@@ -258,7 +258,7 @@ Bundling is an effective solution to many problems, but as apps scale especially
 is an old technique to optimize applications. The technique sets aside non-critical assets to be rendered following all the critical ones
 
 
-###**State**
+##**State**
 
 **Recoil**
 [source](https://www.telerik.com/blogs/recoil-in-react)
@@ -280,7 +280,22 @@ State management library
   a Selector is a pure function that can receive an atom or a selector as an input. given an input, the selector returns a modified state every time the upstream atoms or selectors are updated.
 
 
-#**Side effects and useEffect**
+####**Context**
+
+
+Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+
+think of Context as a global variable for state
+
+you can even pass context setter into the context
+
+**When to use Context**
+
+anything that is considered "Global" such as authenticated, theme or preferred language.
+
+rule of thumb, usually you shouldn't use Context, unless you really need to use it.
+
+####**Side effects and useEffect**
 
 useEffect lets us perform side effects in function components. So what are side effects?
 
