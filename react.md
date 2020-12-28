@@ -691,3 +691,38 @@ Is invoked immediately after updating occurs. This method isn't called for the i
 
 #####componentWillUnmount()
 Is invoked immediately before a component is unmounted and destroyed. Perform any necessary cleanup in this method, such as invalidating timers, cancelling network requests, or cleaning up any subscriptions that were created in `componentDidMount()`
+
+#TO ADD
+- unidirectional dataflow
+- server-side rendering
+
+
+#####Questions
+1. What is React?
+- JS frontend library that is used to make interactive applications for the web or mobile, often single page. It is used for handing the view layer for the application.
+2. What are the major features of React?
+- The lifecycle methods for tracking state, and the need to re-render individual components within a DOM tree, using the virtual DOM. Server side rendering. Unidirectional data flow. Composition with components /reuseable components
+3. What is JSX?
+- syntactic sugar, looks like html, provides us with a way to express our apps with javascript along with html like template.
+4. What is the difference between Element and Component?
+- elements are plain objects, describing what you want to appear on the DOM. Creating a react element is cheap. Once created, it is never mutated. components are complex and can be mutated over time.
+5. How to create components in React?
+- functional or class based definition
+6. When to use a Class Component over a Function Component?
+- since 16.8 it's preference
+7. What are Pure Components?
+- React.PureComponent and React.Component are the same except it handles the shouldComponentUpdate() method for you. when props or state changes, PureComponent will do a shallow comparison on both state and props, Component won't compare either, thus will re-render by default whenever shouldComponentUpdate()
+8. What is state in React?
+- an object that may be mutated within the components, usually we want to build as simple an concise state, while keeping as many components stateless as possible
+9. What are props in React?
+- are values that are passed down from parent component that the child component can use to either pass to its children, or effect the way the component works
+10. What is the difference between state and props?
+11. Why should we not update the state directly?
+12. What is the purpose of callback function as an argument of setState()?
+13. What is the difference between HTML and React event handling?
+14. How to bind methods or event handlers in JSX callbacks?
+15. How to pass a parameter to an event handler or callback?
+16. What are synthetic events in React?
+17. What are inline conditional expressions?
+18. What is "key" prop and what is the benefit of using it in arrays of elements?
+19. What is the use of refs?
