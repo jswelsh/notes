@@ -452,10 +452,10 @@ function App() {
 }
 ```
 
-**Peformance and useCallback**
+**Performance and useCallback**
 
 useCallback is a hook that is used for improving our component's performance.
-
+2
 If you have a component that re-renders frequently, useCallback prevents callback functions within the component from being recreated every single time the component re-renders (which means the function component re-runs).
 
 useCallback re-runs only when one of it's dependencies changes.
@@ -606,3 +606,88 @@ Prop Drilling is when you pass props down through a component that doesn't use t
 also known as **threading**.
 
 solution to prop drilling is compound components or react context
+
+
+###**React Lifecycle**
+[source](https://tsh.io/blog/react-component-lifecycle-methods-vs-hooks/)
+[source](https://reactjs.org/docs/hooks-intro.html)
+[source](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+The Basics
+- **Mounting:** inserting elements into the DOM
+- **Updating:** using methods to update components in the DOM
+- **Unmounting:** removing a component from the DOM
+
+[**Really useful Lifecycle diagram**](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+
+##**Lifecycle Methods**
+
+#####**Mounting**
+- **constructor()**
+- static getDerivedStateFromProps()
+- **render()**
+- **componentDidMount()**
+
+#####**Update**
+- static getDerivedStateFromProps()
+- shouldComponentUpdate()
+- **render()**
+- getSnapshotBeforeUpdate()
+- **componentDidUpdate()**
+
+#####**Unmounting**
+- **componentWillUnmount()**
+
+**Handling exceptions**
+- static getDerivedStateFromError()
+- componentDidCatch()
+
+
+**Other API**
+Each component also provides several other APIs:
+
+- setState()
+- forceUpdate()
+Properties of the class
+- defaultProps
+- displayName
+Instance properties
+- props
+- state
+
+#####render()
+this is the only method required in a class component. When first invoked it should check this.props and this.state and return one of the following types:
+- React element
+- Arrays and fragments 
+- Portals
+- Strings and numbers
+- Boolean or null
+the function `render()` should be pure, it doesn't modify the components state, returns the same result every time it is invoked, and doesn't interact with the browser
+>attention: the function `render()` will not be called if `shouldComponentUpdate()` returns `false`
+
+#####constructor(props)
+unless you initilize state and bind methods, you don't need to implement a constructor in your React component
+
+typically, constructors are used for two purposes:
+- Initializing local state by assigning an object to this.state.
+- Binding event handler methods to an instance.
+
+don't call setState() in the `constructor()`. Instead assign the initial state to this.state
+```
+constructor(props) {
+  super(props);
+  // Don't call this.setState() here!
+  this.state = { counter: 0 };
+  this.handleClick = this.handleClick.bind(this);
+}
+```
+#####componentDidMount()
+Is invoke immediately after a component is mounted (inserted into the tree). Initialization that requires the DOM nodes should go here.
+
+This method is a good place to set up any subscriptions. If you do that, don’t forget to unsubscribe in componentWillUnmount().
+
+#####componentDidUpdate(prevProps, prevState, snapshot)
+Is invoked immediately after updating occurs. This method isn't called for the initiate render.
+>attention: componentDidUpdate() will not be invoked if shouldComponentUpdate() returns false.
+
+#####componentWillUnmount()
+Is invoked immediately before a component is unmounted and destroyed. Perform any necessary cleanup in this method, such as invalidating timers, cancelling network requests, or cleaning up any subscriptions that were created in `componentDidMount()`
