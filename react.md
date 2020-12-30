@@ -692,6 +692,25 @@ Is invoked immediately after updating occurs. This method isn't called for the i
 #####componentWillUnmount()
 Is invoked immediately before a component is unmounted and destroyed. Perform any necessary cleanup in this method, such as invalidating timers, cancelling network requests, or cleaning up any subscriptions that were created in `componentDidMount()`
 
+
+
+####**React component lifecycle with hooks**
+Using `useEffect()` hook to achieve the same results as with the componentDidMount, componentDidUpdate and componentWillUnmount methods. `useEffect()` accepts two parameters, a callback that runs after the render, a dependency array. If you want it to run on mount and unmount only, pass an empty array [].
+
+to clean up, return the callback in useEffect: 
+```
+useEffect(
+  () => {
+    document.addEventListener(“click”, someFunc);
+    
+    return () => {
+      document.removeEventListener(“click”, someFunc);
+    };
+  },
+  []
+);
+```
+
 #TO ADD
 - unidirectional dataflow
 - server-side rendering
@@ -717,12 +736,72 @@ Is invoked immediately before a component is unmounted and destroyed. Perform an
 9. What are props in React?
 - are values that are passed down from parent component that the child component can use to either pass to its children, or effect the way the component works
 10. What is the difference between state and props?
+- props are immutable values provided from the parent component or to the child component. state is mutable values manipulated by the local component
 11. Why should we not update the state directly?
+- manipulating state directly doesn't allow react to track the re-render needed by the change to state.
 12. What is the purpose of callback function as an argument of setState()?
+- it invokes after setState finishes, though its recommend to use a life cycle method
 13. What is the difference between HTML and React event handling?
+- react you use camelCase, you call preventDefault() to do that and you do not append () after to invoke a function such as `onClick='doThisFunc' `
 14. How to bind methods or event handlers in JSX callbacks?
 15. How to pass a parameter to an event handler or callback?
 16. What are synthetic events in React?
 17. What are inline conditional expressions?
 18. What is "key" prop and what is the benefit of using it in arrays of elements?
 19. What is the use of refs?
+
+
+###**React and SEO**
+[source](https://rubygarage.org/blog/seo-for-react-websites)
+- [Google gets about 90% of all search requests](https://gs.statcounter.com/search-engine-market-share)
+- [The first five links that appear in search results always get the most traffic](https://www.impactplus.com/blog/seo-statistics)
+
+
+#####1. Slow and Complex indexing process
+
+![Indexing an HTML Webpage](https://rubygarage-production-production-bucket.s3.amazonaws.com/uploads/article_image/file/3467/indexing-html-page-1x.png)
+
+![Indexing a JavaScript Webpage](https://rubygarage-production-production-bucket.s3.amazonaws.com/uploads/article_image/file/3469/indexing-javascript-page-1x.png)
+
+#####2. Errors in JavaScript code 
+
+HTML and JavaScript have absolutely different approaches to processing errors. A single error in JavaScript code can make indexing impossible.
+This is because the JavaScript parser is completely intolerant of errors. 
+A single error with stop the parsing immediately, thus the bot will see an empty page
+
+#####3. Exhausted crawling budget
+
+A crawling budget is the maximum number of pages that search engine bots can crawl in a specific period of time (usually five seconds for one script).
+
+A lot of websites built on JavaScript experience indexing problems because Google has to wait too long (more than five seconds) for scripts to load, parse, and execute. Slow scripts mean the Google bot will quickly run out of its crawling budget for your site and leave it before indexing it.
+
+#####4. Challenges of indexing SPAs
+
+Single-page applications (SPAs) are web apps created with React. These web apps consist of only one page that’s loaded once.
+
+All other information is loaded dynamically.If a bot is crawling the page when the content hasn’t been loaded, the bot will see an empty page. A significant part of the site won’t be indexed. Therefore, your site will get a much lower ranking in search results. 
+
+
+####Making React website SEO-friendly
+
+#####Pre-rendering
+
+Pre-rendering is used when search bots can’t render your pages correctly. In these cases, you can use pre-renderers: special programs that intercept requests to your website and, if the request is from a bot, pre-renders send a cached static HTML version of your website. If the request is from a user, the usual page is loaded. 
+
+- Pre-rendering programs are able to execute all types of modern JavaScript and transform it into static HTML.
+- Pre-renderers support all the latest web novelties.
+- This approach requires minimal codebase modifications or no modifications at all.
+- It’s simple to implement.
+However, there are also some drawbacks to this approach:
+- It isn’t suitable for pages that display frequently changing data.
+- Pre-rendering can take too long if the website is large and contains a lot of pages.
+- Pre-rendering services aren’t free.
+- You need to rebuild your pre-rendered page every time you change its content.
+
+#####Server-side rendering
+
+Client-side rendering means that a browser and Google bot get empty HTML files or files with little content. Then JavaScript code downloads the content from the server and users see it on their screens.
+
+In terms of SEO, client-side rendering is a problem, as Google bots don’t get any content or get a little content they can’t index properly.
+
+With server-side rendering, browsers and Google bots get HTML files with all the content. Google bots can index the page properly and rank it higher.
