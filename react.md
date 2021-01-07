@@ -2,7 +2,16 @@
 ***
 >framework/library, frontend, fast, JSX, component based
 
-React is a fast, Declarative Javascript library that allows simple interactive user interfaces to be designed with relative ease and reason. 
+React is a fast, Declarative Javascript library that allows simple interactive user interfaces to be designed with relative ease and reason.
+[source](https://ui.dev/imperative-vs-declarative-programming/)
+>When React says that it is declarative it is also saying that it is not designed to be imperative. jQuery uses an imperative model to manipulate the DOM. When using jQuery we provide instructions to the browser on how to manipulate the DOM tree.
+
+######Good Components are:
+
+- Composable: we can combine them together to build complex user interfaces
+- Encapsulated: we can build them in isolation
+- Reuseable: we can use them in different parts of our application without duplicating code
+- Testable: we can isolate them for certain types of testing
 
 **New JSX Enhancements with React 17**
 
@@ -805,3 +814,53 @@ Client-side rendering means that a browser and Google bot get empty HTML files o
 In terms of SEO, client-side rendering is a problem, as Google bots don’t get any content or get a little content they can’t index properly.
 
 With server-side rendering, browsers and Google bots get HTML files with all the content. Google bots can index the page properly and rank it higher.
+
+
+#Tools to use with React
+
+#####SVGR
+#####List Virtualization
+#####infinite scrolling
+
+###React and Routes
+[source](https://surajsharma.net/blog/current-url-in-react)
+
+1. using window.location object the simplest way to get current URL and pathname is using a browser's window object
+```
+const currentURL = window.location.href // returns the absolute URL of a page
+
+const pathname = window.location.pathname //returns the current url minus the domain name
+```
+2. React Router DOM 
+if your React App uses `react-router-dom` library for routing your single page application then...
+
+######Using location props
+`<Route path=”/home” component={Home} />`
+Implicity, `location`, `match` and `history` props are passed into the `Home` component.
+
+These props can be accessed inside the `Home` component like this
+```
+import React from 'react';
+
+const Home = (props) => {
+  console.log(props.location);
+  console.log(props.match);
+  console.log(props.history);
+  return <></>;
+}
+
+export default Home;
+```
+`props.location.pathname` can get you the current URL pathname inside a React component.
+
+######Using useLocation() custom hook
+```
+import { useLocation } from 'react-router-dom';
+
+// custom hook to get the current pathname in React
+
+const usePathname = () => {
+  const location = useLocation();
+  return location.pathname;
+}
+```
