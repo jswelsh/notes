@@ -864,3 +864,104 @@ const usePathname = () => {
   return location.pathname;
 }
 ```
+
+#####Closure
+
+>because of the nature of closures, everytime the component is re-rendered (whenever we update the state), a new function is created, but when the alert is fired, the older closures haven’t been destroyed, so the component alerts the correct message. However, because we don’t have the same closure for the class component, everytime we change the state and it re-renders, we’re forced to deal with the latest state. You can play around with the example in this [codesandbox](https://codesandbox.io/s/angry-cookies-ts0xs?file=/src/index.js).
+
+
+#####useMemo() vs useCallback vs plain function
+[source](https://kentcdodds.com/blog/usememo-and-usecallback)
+
+it is often said that inline functions can be problematic for performance, but when is is useCallback appropriate and when does it slow things down.
+
+think about this
+
+```
+const dispense = candy => {
+  setCandies(allCandies => allCandies.filter(c => c !== candy))
+}
+const dispenseCallback = React.useCallback(dispense, [])
+```
+
+####vs
+
+```
+const dispense = candy => {
+  setCandies(allCandies => allCandies.filter(c => c !== candy))
+}
+```
+
+the only difference is 
+`const dispenseCallback = React.useCallback(dispense, [])` was added, they're exactly the same except the useCallback version is doing more work. Not only do we have to define the function, but we also have to define an array ([]) and call the React.useCallback which itself is setting properties/running through logical expressions etc.
+
+So in both cases JavaScript must allocate memory for the function definition on every render and depending on how useCallback is implemented, you may get more allocation for function definitions (this is actually not the case, but the point still stands). 
+
+
+Assuming this code appears in a React function component, how many function allocations are happening with this code on each render?
+
+`const a = () => {}`
+
+And how many are happening with this code?
+
+`const a = useCallback(() => {}, [])`
+
+I'd like to mention also that on the second render of the component, the original dispense function gets garbage collected (freeing up memory space) and then a new one is created. However with useCallback the original dispense function wont get garbage collected and a new one is created, so you're worse-off from a memory perspective as well.
+
+As a related note, if you have dependencies then it's quite possible React is hanging on to a reference to previous functions because memoization typically means that we keep copies of old values to return in the event we get the same dependencies as given previously. The especially astute of you will notice that this means React also has to hang on to a reference to the dependencies for this equality check (which incidentally is probably happening anyway thanks to your closure, but it's something worth mentioning anyway).
+
+#####Dependencies lists
+
+```
+function Foo({bar, baz}) {
+  const options = {bar, baz}
+  React.useEffect(() => {
+    buzz(options)
+  }, [options]) // we want this to re-run if bar or baz change
+  return <div>foobar</div>
+}
+function Blub() {
+  return <Foo bar="bar value" baz={3} />
+}
+```
+
+The reason this is problematic is because useEffect is going to do a referential equality check on options between every render, and thanks to the way JavaScript works, options will be new every time so when React tests whether options changed between renders it'll always evaluate to true, meaning the useEffect callback will be called after every render rather than only when bar and baz change.
+
+There are two things we can do to fix this:
+```
+// option 1
+function Foo({bar, baz}) {
+  React.useEffect(() => {
+    const options = {bar, baz}
+    buzz(options)
+  }, [bar, baz]) // we want this to re-run if bar or baz change
+  return <div>foobar</div>
+}
+```
+
+That's a great option and if this were a real thing that's how I'd fix this.
+
+But there's one situation when this isn't a practical solution: If bar or baz are (non-primitive) objects/arrays/functions/etc:
+```
+function Blub() {
+  const bar = () => {}
+  const baz = [1, 2, 3]
+  return <Foo bar={bar} baz={baz} />
+}
+```
+This is precisely the reason why useCallback and useMemo exist. So here's how you'd fix that (all together now):
+```
+function Foo({bar, baz}) {
+  React.useEffect(() => {
+    const options = {bar, baz}
+    buzz(options)
+  }, [bar, baz])
+  return <div>foobar</div>
+}
+function Blub() {
+  const bar = React.useCallback(() => {}, [])
+  const baz = React.useMemo(() => [1, 2, 3], [])
+  return <Foo bar={bar} baz={baz} />
+}
+```
+>Note that this same thing applies for the dependencies array passed to useEffect, useLayoutEffect, useCallback, and useMemo.
