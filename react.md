@@ -965,3 +965,15 @@ function Blub() {
 }
 ```
 >Note that this same thing applies for the dependencies array passed to useEffect, useLayoutEffect, useCallback, and useMemo.
+
+
+### React Server Components
+[source](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html)
+[Source video on data fetching with React SErver Components](https://www.youtube.com/watch?v=TQQPAU21ZUw&feature=emb_logo)
+
+React Server Components are still in research and development!
+you can flag components as server components by adding a `.server` postfix between the file type and file name ie `MyServerComponent.server.js` this tells React that the component should be server side rendered. You can pass Client side components to the server component by `import MyClientComponent from './MyClientComponent.client'`.
+
+any dependencies required for the server components never need to be downloaded for the user to use. React knows to handle these on the server leaving less of a footprint caused by libraries.
+
+One Caveat of server components is you have to sacrifice interactivity. The server component cannot have things like useState or eventListeners. You can work around this by putting interactivity into client side components and importing those into the parent server component. Props passed from a parent server component to a child client component must be serializable over the network, so passing functions is not something possible.
