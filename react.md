@@ -971,6 +971,8 @@ function Blub() {
 [source](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html)
 [Source video on data fetching with React SErver Components](https://www.youtube.com/watch?v=TQQPAU21ZUw&feature=emb_logo)
 
+[RFC: React Server Components Docs](https://github.com/josephsavona/rfcs/blob/server-components/text/0000-server-components.md)
+
 React Server Components are still in research and development!
 you can flag components as server components by adding a `.server` postfix between the file type and file name ie `MyServerComponent.server.js` this tells React that the component should be server side rendered. You can pass Client side components to the server component by `import MyClientComponent from './MyClientComponent.client'`.
 
