@@ -95,7 +95,7 @@ Encrypting and decrypting an ethereum wallet is slow and can take quite ome time
 
 The algorithm usually used for this process is Scrypt, which is a memory and CPU intensive algorithm which computes a key (fixed-length pseudo-random series of bytes) for a given password.
 
-Why make the algorithm slow and intensive: The goal is to use as much CPU and memory as possible durring this algorithm, so that a single computer can only compute a very small number of results for some fixed amount of time. To scale up an attack, the attacker requires additional computers, increasing cost to brute-force-attack to guess the password.
+Why make the algorithm slow and intensive: The goal is to use as much CPU and memory as possible during this algorithm, so that a single computer can only compute a very small number of results for some fixed amount of time. To scale up an attack, the attacker requires additional computers, increasing cost to brute-force-attack to guess the password.
 
 example: user knows password, it takes them ten seconds to unlock their password. Attacker doesn't know password, it costs them 10 million seconds or 115 days to guess a million passwords of someones.
 
@@ -106,3 +106,16 @@ There is no way the algorithm can be faster for a legitimate user without also b
 Rather than reducing the security (see below), a better practice is to make the user feel better about waiting. The Ethers encryption and decryption API allows the developer to incorporate a progress bar, by passing in a progress callback which will be periodically called with a number between 0 and 1 indication percent completion.
 
 In general a progress bar makes the experience feel faster, as well as more comfortable since there is a clear indication how much (relative) time is remaining. Additionally, using language like "decrypting..." in a progress bar makes a user feel like there time is not being needlessly wasted.
+
+##### Provider
+A Provider is an abstraction of a connection to the Ethereum network, providing a concise, consistent interface to standard Ethereum node functionality. It is a read-only abstraction to access the blockchain data.
+`ethers.getDefaultProvider( [ network , [ options ] ] ) ⇒ Provider`
+
+##### Networks
+There are several official common Ethereum networks as well as custom networks and other compatible projects.
+
+##### Signers
+A Signer in ethers is an abstraction of an Ethereum Account, which can be used to sign messages and transactions and send signed transactions to the Ethereum Network to execute state changing operations.
+
+##### Contract Interaction
+A Contract object is an abstraction of a contract (EVM bytecode) deployed on the Ethereum network. It allows for a simple way to serialize calls and transactions to an on-chain contract and deserialize their results and emitted logs.
